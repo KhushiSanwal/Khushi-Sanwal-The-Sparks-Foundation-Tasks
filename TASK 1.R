@@ -16,6 +16,7 @@ head(data)
 
 plot(data$Hours, data$Scores, main="Hours vs Percentage", xlab="Hours Studied",
      ylab="Percentage Score", pch=19, col="blue")
+abline(lm(data$Scores~data$Hours,data = data),col="brown")
 
 # Define the feature and target variables
 
