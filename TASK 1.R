@@ -5,7 +5,7 @@
 # Load the dataset from the given URL
 
 library(readxl)
-data <- read_excel("SPARKS/student_scores - student_scores.xlsx")
+data <- read_excel("C:\\Users\\ks\\Documents\\SPARKS\\student_scores - student_scores.xlsx")
 View(data)
 
 # Display the first few rows of the dataset
