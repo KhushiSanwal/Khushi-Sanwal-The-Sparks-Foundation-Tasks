@@ -1,14 +1,5 @@
----
-title: "TASK_4_TSF"
-date: "2024-05-18"
-output:
-  word_document: default
-  pdf_document: default
----
-
-``````{r }
 # Create the Decision Tree classifier and visualize it graphically.
-#The purpose is if we feed any new data to this classifier, it would be able to predict the right class accordingly.
+# The purpose is if we feed any new data to this classifier, it would be able to predict the right class accordingly.
 
 # KHUSHI SANWAL
 
@@ -45,6 +36,3 @@ prediction <- predict(model, new_data, type = "class")
 # Print the prediction
 
 print(paste("Predicted class for the new data is:", as.character(prediction)))
-
-
-``````
