@@ -1,0 +1,43 @@
+---
+title: "TASK 2 TSF"
+output:
+  word_document: default
+  pdf_document: default
+date: "2024-05-17"
+---
+
+```{r }
+# From the given 'Iris' dataset, predict the optimum number of clusters and
+# represent it visually.
+# Use R or Python or perform this task
+
+# KHUSHI SANWAL
+
+# TASK - 2
+
+# Load the built-in Iris dataset
+
+data(iris)
+
+# Remove the Species column as we only need the numerical features for clustering
+
+iris_features <- iris[, -5]
+
+# Compute within-cluster sum of squares for different numbers of clusters
+
+wss <- numeric(10)
+for (i in 1:10) {
+  kmeans_result <- try(kmeans(iris_features, centers = i), silent = TRUE)
+  if (!inherits(kmeans_result, "try-error")) {
+    wss[i] <- sum(kmeans_result$withinss)
+  }
+}
+
+# Plot the elbow method graph
+
+plot(1:10, wss, type = "b", pch = 19, frame = FALSE, 
+     xlab = "Number of clusters",
+     ylab = "Within clusters sum of squares",
+     main = "Elbow Method for K-means clustering")
+```
+
