@@ -1,0 +1,107 @@
+---
+title: "TASK 3 TSF"
+output:
+  word_document: default
+  pdf_document: default
+date: "2024-05-18"
+---
+
+```{r}
+# Perform 'Exploratory Data Analysis' on dataset 'SampleSuperstore'
+# As a business manager, try to find out the weak areas where you can work to 
+# make more profit.
+# What all business problems you can derive by exploring the data?
+# You can choose any of the tool of your choice (Python/R/Tableau/PowerBI/Excel/SAP/SAS)
+
+# KHUSHI SANWAL
+
+# TASK - 3
+
+# Load necessary libraries
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(ggthemes)
+
+# Load the dataset
+
+library(readxl)
+superstore <- read_excel("C:\\Users\\ks\\Documents\\SPARKS\\SampleSuperstore.xlsx")
+
+# View the first few rows of the dataset
+
+head(superstore)
+
+# Check for missing values
+
+sum(is.na(superstore))
+
+# Summary of the dataset
+
+summary(superstore)
+
+# Check for duplicate rows
+
+sum(duplicated(superstore))
+
+# Remove duplicate rows if any
+
+superstore <- superstore[!duplicated(superstore), ]
+
+# Check the data types
+
+str(superstore)
+
+# Calculate summary statistics for numerical columns
+
+summary(superstore)
+
+# Calculate total sales, profit, and quantity
+
+total_sales <- sum(superstore$Sales)
+total_profit <- sum(superstore$Profit)
+total_quantity <- sum(superstore$Quantity)
+
+total_sales
+total_profit
+total_quantity
+
+# Sales and Profit by Category
+
+category_summary <- superstore %>%
+  group_by(Category) %>%
+  summarise(Total_Sales = sum(Sales), Total_Profit = sum(Profit))
+
+ggplot(category_summary, aes(x = Category, y = Total_Sales, fill = Category)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(Total_Sales, 2)), vjust = -0.3) +
+  labs(title = "Total Sales by Category", x = "Category", y = "Total Sales") +
+  theme_minimal()
+
+ggplot(category_summary, aes(x = Category, y = Total_Profit, fill = Category)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(Total_Profit, 2)), vjust = -0.3) +
+  labs(title = "Total Profit by Category", x = "Category", y = "Total Profit") +
+  theme_minimal()
+
+# Sales and Profit by Region
+
+region_summary <- superstore %>%
+  group_by(Region) %>%
+  summarise(Total_Sales = sum(Sales), Total_Profit = sum(Profit))
+
+ggplot(region_summary, aes(x = Region, y = Total_Sales, fill = Region)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(Total_Sales, 2)), vjust = -0.3) +
+  labs(title = "Total Sales by Region", x = "Region", y = "Total Sales") +
+  theme_minimal()
+
+ggplot(region_summary, aes(x = Region, y = Total_Profit, fill = Region)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = round(Total_Profit, 2)), vjust = -0.3) +
+  labs(title = "Total Profit by Region", x = "Region", y = "Total Profit") +
+  theme_minimal()
+
+```
+
