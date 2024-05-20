@@ -1,0 +1,96 @@
+---
+title: "TASK_5_TSF"
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+date: "2024-05-20"
+---
+
+```{r }
+# KHUSHI SANWAL
+
+# TASK - 5
+
+# Perform 'Exploratory Data Analysis' on dataset 'Global Terrorism'
+# As a security/defense analyst, try to find out the hot zone of terrorism.
+# What all security issues and insights you can derive by EDA?
+# You can choose any of the tool of your choice (Python/R/Tableau/PowerBl/Excel
+# /SAP/SAS)
+
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(lubridate)) install.packages("lubridate")
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(maps)) install.packages("maps")
+
+Sys.setlocale("LC_ALL", "C")
+
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(maps)
+
+setwd("C:\\Users\\ks\\Documents\\SPARKS\\")
+
+# Load the dataset
+
+data <- read.csv("Terrorism.csv", stringsAsFactors = FALSE)
+
+# Convert date fields to Date format and handle missing values
+
+data_clean <- data %>%
+  drop_na(latitude, longitude, country_txt, attacktype1_txt, nkill) %>%
+  mutate(date = make_date(iyear, imonth, iday))
+
+# Check for inconsistencies in the data
+
+str(data_clean)
+
+# Confirm the dimensions
+
+dim(data_clean)
+
+# Number of attacks per year
+
+attacks_per_year <- data_clean %>%
+  group_by(iyear) %>%
+  summarise(total_attacks = n())
+
+# Plot number of attacks per year
+
+ggplot(attacks_per_year, aes(x = iyear, y = total_attacks)) +
+  geom_line() +
+  labs(title = "Number of Terrorist Attacks per Year", x = "Year", y = "Total Attacks")
+
+# Number of attacks per country
+
+attacks_per_country <- data_clean %>%
+  group_by(country_txt) %>%
+  summarise(total_attacks = n()) %>%
+  arrange(desc(total_attacks))
+
+# Top 10 countries with most attacks
+
+top_10_countries <- head(attacks_per_country, 10)
+
+# Plot top 10 countries with most attacks
+
+ggplot(top_10_countries, aes(x = reorder(country_txt, total_attacks), y = total_attacks)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(title = "Top 10 Countries with Most Terrorist Attacks", x = "Country", y = "Total Attacks")
+
+# Global Map of terrorist attacks
+
+world_map <- map_data("world")
+
+ggplot() +
+ geom_map(data = world_map, map = world_map,
+           aes(long, lat, map_id = region),
+           fill = "gray90", color = "gray50") +
+  geom_point(data = data_clean, aes(x = longitude, y = latitude),
+             color = "red", alpha = 0.5, size = 1) +
+  labs(title = "Global Map of Terrorist Attacks") +
+  theme_minimal()
+```
