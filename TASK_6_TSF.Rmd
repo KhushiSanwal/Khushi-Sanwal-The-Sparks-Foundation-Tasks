@@ -1,0 +1,65 @@
+---
+title: "TASK_6_TSF"
+output: word_document
+date: "2024-05-20"
+---
+
+```{r }
+# KHUSHI SANWAL
+
+# TASK - 6
+
+# Perform 'Exploratory Data Analysis' on dataset 'Indian Premier League'
+# As a sports analysts, find out the most successful teams, players and factors 
+# contributing win or loss of a team.
+# Suggest teams or players a company should endorse for its products.
+# You can choose any of the tool of your choice (Python/R/Tableau/PowerBI/Excel
+# /SAP/SAS)in r
+
+# Set working directory 
+
+setwd("C:\\Users\\ks\\Documents\\SPARKS\\") 
+
+# Load the dataset
+
+ipl_data <- read.csv("india-news-headlines.csv", stringsAsFactors = FALSE)
+
+# Load necessary packages
+
+if (!require(tidyverse)) install.packages("tidyverse")
+if (!require(lubridate)) install.packages("lubridate")
+
+library(tidyverse)
+library(lubridate)
+
+# Convert 'publish_date' to Date object
+
+ipl_data$publish_date <- as.Date(ipl_data$publish_date)
+
+# Check for missing values
+
+summary(ipl_data)
+
+# Create a time series plot of the number of headlines over time
+
+ipl_data %>%
+  count(publish_date) %>%
+  ggplot(aes(x = publish_date, y = n)) +
+  geom_line() +
+  labs(title = "Number of Headlines Over Time", x = "Date", y = "Number of Headlines") +
+  theme_minimal()
+
+# Creating a new column for month
+
+ipl_data$month <- month(ipl_data$publish_date, label = TRUE)
+
+# Plot the distribution of headlines over months
+
+ipl_data %>%
+  count(month) %>%
+  ggplot(aes(x = month, y = n, fill = month)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Distribution of Headlines Over Months", x = "Month", y = "Number of Headlines") +
+  theme_minimal()
+```
+
